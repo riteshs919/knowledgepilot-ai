@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: knowledgepilot-ai
+    runtime: python
+    plan: free
+    buildCommand: python -m zipfile -e knowledgepilot-ai-deploy.zip . && pip install -r knowledgepilot-ai/requirements.txt
+    startCommand: cd knowledgepilot-ai && python scripts/cloud_boot.py
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.12
+      - key: KP_BOOTSTRAP_PASSWORD
+        generateValue: true
+      - key: KP_LLM_API_KEY
+        sync: false
+      - key: KP_LLM_BASE_URL
+        value: https://api.groq.com/openai/v1
+      - key: KP_LLM_MODEL
+        value: openai/gpt-oss-20b
+      - key: KP_ANSWER_MODE
+        value: hosted
+      - key: KP_ENABLE_PUBLIC_DEMO
+        value: true
+      - key: KP_EPHEMERAL_DEMO
+        value: true
+      - key: KP_SECURE_COOKIES
+        value: true
+      - key: KP_CHAT_RPM
+        value: 2
+      - key: KP_DATA_DIR
+        value: /tmp/knowledgepilot-demo
