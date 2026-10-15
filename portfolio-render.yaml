@@ -5,7 +5,7 @@ services:
     plan: free
     buildCommand: python3 -m zipfile -e portfolio-source.zip . && cd portfolio && npx --yes pnpm@11.25.0 install --frozen-lockfile && npm run build
     startCommand: cd portfolio && npx next start --hostname 0.0.0.0 --port $PORT
-    healthCheckPath: /about
+    healthCheckPath: /projects
     envVars:
       - key: NODE_VERSION
         value: 22.16.0
